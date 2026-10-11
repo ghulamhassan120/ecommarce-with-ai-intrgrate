@@ -58,17 +58,25 @@ RULES:
   const hasHtmlStart = /<html[\s>]/i.test(html);
   const hasHtmlEnd = /<\/html\s*>/i.test(html);
 
-  if (!html || !hasHtmlStart || !hasHtmlEnd) {
-    console.error("Gemini response preview:", html.slice(0, 500));
-    console.error(
-      "Gemini finish reason:",
-      response.candidates?.[0]?.finishReason
-    );
 
-    throw new Error(
-      "Gemini returned incomplete HTML. Check the server terminal for details."
-    );
-  }
+if (!html || !hasHtmlStart || !hasHtmlEnd) {
+  console.error("Gemini response preview:", html.slice(0, 1000));
+  console.error("Gemini response length:", html.length);
+  console.error(
+    "Gemini finish reason:",
+    response.candidates?.[0]?.finishReason
+  );
+  console.error(
+    "Gemini candidate count:",
+    response.candidates?.length ?? 0
+  );
+
+  throw new Error(
+    `Gemini returned incomplete HTML. Finish reason: ${
+      response.candidates?.[0]?.finishReason ?? "UNKNOWN"
+    }`
+  );
+}
 
   return html;
 }
