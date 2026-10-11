@@ -194,6 +194,14 @@ app.get("/api/projects/:id", async (req, res) => {
 
 
 
-app.listen(PORT, () => {
-  console.log(`PromptCraft AI running at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`PromptCraft AI running at http://localhost:${PORT}`);
+// });
+
+export default app;
+
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`PromptCraft AI running at http://localhost:${PORT}`);
+  });
+}
